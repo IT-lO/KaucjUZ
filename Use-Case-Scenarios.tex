@@ -1,0 +1,679 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\geometry{
+    left=2cm,
+    right=2cm,
+    top=2cm,
+    bottom=2cm
+}
+
+\title{Scenariusze przypadków użycia\\Automat do butelek}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{UC1: Wprowadzenie butelki}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\textbf{Przypadek użycia} & Wprowadzenie butelki do automatu \\
+\hline
+
+\textbf{Aktor} & Użytkownik \\
+\hline
+
+\textbf{Opis} & Użytkownik wkłada butelkę do automatu w celu jej recyklingu i otrzymania zwrotu pieniędzy lub darmowej utylizacji \\
+\hline
+
+\textbf{Warunki wstępne} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Automat jest włączony i sprawny
+    \item Automat ma miejsce w kontenerze
+    \item Użytkownik posiada butelkę do zwrotu
+\end{itemize} \\
+\hline
+
+\textbf{Główny scenariusz} & 
+\begin{enumerate}[leftmargin=*, nosep]
+    \item Użytkownik umieszcza butelkę w otworze przyjmującym
+    \item System zczytuje kod kreskowy butelki
+    \item System określa materiał butelki (plastik/szkło/aluminium)
+    \item System określa pojemność butelki
+    \item System określa poziom zgniecenia butelki
+    \item System akceptuje butelkę
+    \item System sortuje butelkę po materiale
+    \item System zgniata butelkę (jeśli plastikowa)
+    \item System przemieszcza butelkę do odpowiedniego kontenera
+    \item System aktualizuje wysokość uznania na wyświetlaczu
+    \item System aktualizuje liczbę przyjętych butelek
+    \item System wyświetla timer przed ponownym wrzuceniem
+\end{enumerate} \\
+\hline
+
+\textbf{Alternatywne scenariusze} & 
+\textbf{A1: Butelka bez kodu kreskowego}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 2a. System nie może odczytać kodu kreskowego
+    \item 2b. System odrzuca butelkę
+    \item 2c. System wyświetla komunikat o błędzie
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A2: Butelka zbyt zgnieciona}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 5a. System stwierdza zbyt duży poziom zgniecenia
+    \item 5b. System oferuje darmową utylizację
+    \item 5c. Użytkownik potwierdza lub odrzuca
+    \item 5d. System przyjmuje bez zwrotu lub odrzuca butelkę
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A3: Butelka niekwalifikująca się}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 5a. System stwierdza, że butelka nie spełnia kryteriów
+    \item 5b. System odrzuca butelkę
+    \item 5c. System wyświetla przyczynę odrzucenia
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A4: Kontener pełny}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 9a. System wykrywa brak miejsca w kontenerze
+    \item 9b. System przerywa przyjmowanie butelek
+    \item 9c. System wyświetla komunikat "Automat pełny"
+    \item 9d. System wysyła powiadomienie do serwisanta
+\end{itemize} \\
+\hline
+
+\textbf{Warunki końcowe} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Butelka została przyjęta i umieszczona w odpowiednim kontenerze LUB została odrzucona
+    \item Wysokość uznania została zaktualizowana (jeśli przyjęto)
+    \item Liczba butelek została zaktualizowana (jeśli przyjęto)
+    \item System gotowy do przyjęcia kolejnej butelki
+\end{itemize} \\
+\hline
+
+\end{longtable}
+
+\newpage
+
+\section{UC6: Wypłata środków}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\textbf{Przypadek użycia} & Wypłata środków za butelki \\
+\hline
+
+\textbf{Aktor} & Użytkownik \\
+\hline
+
+\textbf{Opis} & Użytkownik kończy wkładanie butelek i wybiera sposób wypłaty zgromadzonych środków \\
+\hline
+
+\textbf{Warunki wstępne} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Użytkownik wrzucił przynajmniej jedną butelkę
+    \item Wysokość uznania jest większa od zera
+    \item Automat jest sprawny
+\end{itemize} \\
+\hline
+
+\textbf{Główny scenariusz} & 
+\begin{enumerate}[leftmargin=*, nosep]
+    \item Użytkownik wybiera "Zakończ transakcję" na wyświetlaczu
+    \item System wyświetla wysokość zgromadzonych środków
+    \item System wyświetla dostępne metody wypłaty
+    \item Użytkownik wybiera metodę wypłaty (np. karta sklepu)
+    \item System przetwarza wypłatę
+    \item System potwierdza wypłatę
+    \item System wyświetla podsumowanie transakcji
+    \item System wysyła powiadomienie o transakcji do systemu sklepu
+    \item System resetuje licznik i wraca do stanu początkowego
+\end{enumerate} \\
+\hline
+
+\textbf{Alternatywne scenariusze} & 
+\textbf{A1: Wypłata na kartę sklepu}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 4a. Użytkownik wybiera "Karta sklepu"
+    \item 4b. Użytkownik skanuje kartę sklepu
+    \item 4c. System dodaje środki do karty
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A2: Wypłata w monetach}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 4a. Użytkownik wybiera "Monety"
+    \item 4b. System wydaje monety
+    \item 4c. System wyświetla "Odbierz monety"
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A3: Wypłata przez aplikację}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 4a. Użytkownik wybiera "Aplikacja sklepu"
+    \item 4b. Użytkownik skanuje kod QR aplikacją
+    \item 4c. System przesyła środki do aplikacji
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A4: Wypłata bonem ze zniżką}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 4a. Użytkownik wybiera "Bon ze zniżką"
+    \item 4b. System drukuje bon z kodem kreskowym
+    \item 4c. System wyświetla "Odbierz bon"
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A5: Wypłata na kartę płatniczą}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 4a. Użytkownik wybiera "Karta"
+    \item 4b. Użytkownik zbliża kartę do terminala
+    \item 4c. System przetwarza zwrot na kartę
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A6: Brak pieniędzy w automacie}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 5a. System wykrywa brak monet
+    \item 5b. System ukrywa opcję "Monety"
+    \item 5c. System oferuje alternatywne metody
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A7: Brak papieru do bonów}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 5a. System wykrywa brak papieru
+    \item 5b. System ukrywa opcję "Bon ze zniżką"
+    \item 5c. System oferuje alternatywne metody
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A8: Anulowanie transakcji}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 4a. Użytkownik wybiera "Anuluj"
+    \item 4b. System anuluje transakcję
+    \item 4c. System wraca do przyjmowania butelek
+\end{itemize} \\
+\hline
+
+\textbf{Warunki końcowe} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Środki zostały wypłacone wybraną metodą
+    \item Powiadomienie o transakcji zostało wysłane
+    \item System został zresetowany do stanu początkowego
+    \item Wyświetlacz pokazuje ekran powitalny
+\end{itemize} \\
+\hline
+
+\end{longtable}
+
+\newpage
+
+\section{UC10: Maintenance automatu}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\textbf{Przypadek użycia} & Konserwacja i serwis automatu \\
+\hline
+
+\textbf{Aktor} & Serwisant \\
+\hline
+
+\textbf{Opis} & Serwisant wykonuje czynności konserwacyjne automatu w celu utrzymania jego sprawności \\
+\hline
+
+\textbf{Warunki wstępne} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Serwisant ma dostęp do automatu
+    \item Serwisant posiada uprawnienia i klucze
+    \item System wysłał powiadomienie o konieczności serwisu LUB jest zaplanowana konserwacja
+\end{itemize} \\
+\hline
+
+\textbf{Główny scenariusz} & 
+\begin{enumerate}[leftmargin=*, nosep]
+    \item Serwisant loguje się do trybu serwisowego
+    \item System wyświetla status automatu
+    \item Serwisant sprawdza poziom napełnienia kontenerów
+    \item Serwisant opróżnia kontenery z butelkami
+    \item Serwisant sprawdza stan rolki papieru
+    \item Serwisant wymienia rolkę papieru (jeśli potrzeba)
+    \item Serwisant sprawdza stan pieniędzy
+    \item Serwisant uzupełnia monety (jeśli potrzeba)
+    \item Serwisant sprawdza stan techniczny elementów
+    \item Serwisant zatwierdza zakończenie konserwacji
+    \item System wysyła powiadomienie o zakończeniu serwisu
+    \item System wraca do trybu normalnego
+\end{enumerate} \\
+\hline
+
+\textbf{Alternatywne scenariusze} & 
+\textbf{A1: Poważna awaria}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 9a. Serwisant wykrywa poważną usterkę
+    \item 9b. Serwisant przełącza automat w tryb "Out of commission"
+    \item 9c. System wyświetla "Automat nieczynny"
+    \item 9d. System blokuje przyjmowanie butelek
+    \item 9e. System wysyła powiadomienie o awarii
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A2: Kontenery prawie pełne}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 3a. System wykrywa napełnienie powyżej 80\%
+    \item 3b. System wysyła powiadomienie o zbliżającym się przepełnieniu
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A3: Papier kończy się}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 5a. System wykrywa, że papier kończy się
+    \item 5b. System wysyła powiadomienie o konieczności wymiany
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A4: Pieniądze kończą się}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 7a. System wykrywa, że monet jest mniej niż 20\%
+    \item 7b. System wysyła powiadomienie o konieczności uzupełnienia
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A5: Konserwacja prewencyjna}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 1a. Serwisant rozpoczyna zaplanowaną konserwację
+    \item 1b. System nie wysyłał wcześniej powiadomień
+    \item 1c. Serwisant wykonuje standardowe czynności kontrolne
+\end{itemize} \\
+\hline
+
+\textbf{Warunki końcowe} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Kontenery zostały opróżnione
+    \item Papier został uzupełniony (jeśli potrzeba)
+    \item Monety zostały uzupełnione (jeśli potrzeba)
+    \item System jest w trybie normalnym LUB w trybie "Out of commission"
+    \item Powiadomienie o stanie po serwisie zostało wysłane
+\end{itemize} \\
+\hline
+
+\end{longtable}
+
+\newpage
+
+\section{UC11: Wysyłanie powiadomień}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\textbf{Przypadek użycia} & Wysyłanie powiadomień do systemu sklepu \\
+\hline
+
+\textbf{Aktor} & System sklepu/Aplikacja \\
+\hline
+
+\textbf{Opis} & Automat automatycznie wysyła powiadomienia o stanie technicznym i transakcjach do centralnego systemu \\
+\hline
+
+\textbf{Warunki wstępne} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Automat ma połączenie z systemem sklepu
+    \item Wystąpiło zdarzenie wymagające powiadomienia
+\end{itemize} \\
+\hline
+
+\textbf{Główny scenariusz} & 
+\begin{enumerate}[leftmargin=*, nosep]
+    \item System wykrywa zdarzenie wymagające powiadomienia
+    \item System przygotowuje dane powiadomienia
+    \item System wysyła powiadomienie POST do systemu sklepu
+    \item System otrzymuje potwierdzenie odbioru
+    \item System loguje wysłane powiadomienie
+\end{enumerate} \\
+\hline
+
+\textbf{Alternatywne scenariusze} & 
+\textbf{A1: Powiadomienie o stanie technicznym - papier}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 1a. System wykrywa, że papier kończy się (<20\%)
+    \item 1b. System wysyła powiadomienie "LOW\_PAPER"
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A2: Powiadomienie o stanie technicznym - kontener}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 1a. System wykrywa, że miejsce w kontenerze się kończy (>80\%)
+    \item 1b. System wysyła powiadomienie "CONTAINER\_FULL"
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A3: Powiadomienie o stanie technicznym - pieniądze}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 1a. System wykrywa, że pieniądze się kończą (<20\%)
+    \item 1b. System wysyła powiadomienie "LOW\_COINS"
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A4: Powiadomienie o transakcji}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 1a. Użytkownik zakończył transakcję
+    \item 1b. System wysyła powiadomienie "TRANSACTION\_COMPLETE" z danymi transakcji
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A5: Brak połączenia}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 3a. System nie może połączyć się z serwerem
+    \item 3b. System zapisuje powiadomienie w kolejce
+    \item 3c. System próbuje wysłać ponownie co 5 minut
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A6: Krytyczna awaria}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 1a. System wykrywa krytyczną awarię
+    \item 1b. System wysyła powiadomienie "CRITICAL\_ERROR" z najwyższym priorytetem
+\end{itemize} \\
+\hline
+
+\textbf{Warunki końcowe} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Powiadomienie zostało wysłane i potwierdzone LUB zapisane w kolejce
+    \item Zdarzenie zostało zalogowane w systemie
+    \item System sklepu otrzymał informację o stanie automatu
+\end{itemize} \\
+\hline
+
+\end{longtable}
+
+\newpage
+
+\section{UC12: Obsługa wyświetlacza/interfejsu}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\textbf{Przypadek użycia} & Interakcja użytkownika z wyświetlaczem automatu \\
+\hline
+
+\textbf{Aktor} & Użytkownik \\
+\hline
+
+\textbf{Opis} & Użytkownik nawiguje po interfejsie automatu, wybiera opcje i otrzymuje informacje zwrotne \\
+\hline
+
+\textbf{Warunki wstępne} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Automat jest włączony
+    \item Wyświetlacz działa poprawnie
+\end{itemize} \\
+\hline
+
+\textbf{Główny scenariusz} & 
+\begin{enumerate}[leftmargin=*, nosep]
+    \item System wyświetla ekran powitalny
+    \item Użytkownik wybiera język z dostępnych opcji
+    \item System zmienia język interfejsu
+    \item System wyświetla instrukcję wkładania butelek
+    \item System wyświetla aktualną wysokość uznania (0,00 zł)
+    \item System wyświetla liczbę przyjętych butelek (0 szt.)
+    \item Użytkownik wkłada butelki (UC1)
+    \item System aktualizuje wysokość uznania po każdej butelce
+    \item System aktualizuje liczbę butelek
+    \item System wyświetla timer przed ponownym wrzuceniem (3 sek.)
+    \item Po upływie timera system sygnalizuje gotowość
+    \item Użytkownik wybiera "Zakończ transakcję"
+    \item System wyświetla ekran wyboru metody wypłaty
+    \item Użytkownik wybiera metodę wypłaty
+    \item System przetwarza wypłatę (UC6)
+    \item System wyświetla podsumowanie transakcji
+    \item System wyświetla podziękowanie
+    \item System wraca do ekranu powitalnego
+\end{enumerate} \\
+\hline
+
+\textbf{Alternatywne scenariusze} & 
+\textbf{A1: Zmiana języka w trakcie}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 7a. Użytkownik wybiera zmianę języka w menu
+    \item 7b. System wyświetla dostępne języki
+    \item 7c. System zmienia język bez przerywania transakcji
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A2: Timeout bezczynności}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 7a. Użytkownik nie wkłada butelki przez 60 sekund
+    \item 7b. System wyświetla komunikat "Czy chcesz kontynuować?"
+    \item 7c. Jeśli brak reakcji przez 30 sek., system przechodzi do wypłaty
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A3: Anulowanie przed wypłatą}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 12a. Użytkownik wybiera "Anuluj" lub "Wrzuć więcej butelek"
+    \item 12b. System wraca do ekranu przyjmowania butelek
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A4: Błąd przyjęcia butelki}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 7a. System odrzuca butelkę
+    \item 7b. System wyświetla komunikat o przyczynie odrzucenia
+    \item 7c. System pokazuje instrukcję poprawnego wkładania
+    \item 7d. System wraca do przyjmowania po 5 sekundach
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A5: Automat pełny}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 1a. System wykrywa pełny kontener
+    \item 1b. System wyświetla "Automat tymczasowo nieczynny"
+    \item 1c. System blokuje możliwość rozpoczęcia transakcji
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A6: Tryb serwisowy}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 1a. Serwisant aktywuje tryb serwisowy
+    \item 1b. System wyświetla interfejs serwisowy
+    \item 1c. System blokuje dostęp dla zwykłych użytkowników
+\end{itemize} \\
+\hline
+
+\textbf{Warunki końcowe} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Użytkownik zakończył interakcję z automatem
+    \item System wrócił do ekranu powitalnego
+    \item Wszystkie dane transakcji zostały przetworzone
+    \item Interfejs jest gotowy dla kolejnego użytkownika
+\end{itemize} \\
+\hline
+
+\end{longtable}
+
+\newpage
+
+\section{UC9: Przechowywanie butelek}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{Element} & \textbf{Opis} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\textbf{Przypadek użycia} & Przetwarzanie i przechowywanie przyjętych butelek \\
+\hline
+
+\textbf{Aktor} & System (proces automatyczny) \\
+\hline
+
+\textbf{Opis} & Automat automatycznie sortuje, przetwarza i przechowuje przyjęte butelki w odpowiednich kontenerach \\
+\hline
+
+\textbf{Warunki wstępne} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Butelka została przyjęta i zweryfikowana
+    \item Materiał butelki został określony
+    \item W kontenerach jest miejsce
+\end{itemize} \\
+\hline
+
+\textbf{Główny scenariusz} & 
+\begin{enumerate}[leftmargin=*, nosep]
+    \item System identyfikuje materiał butelki (plastik/szkło/aluminium)
+    \item System kieruje butelkę na odpowiedni tor sortujący
+    \item Jeśli butelka plastikowa: system aktywuje mechanizm zgniatający
+    \item System zgniata butelkę do 1/3 objętości
+    \item System przemieszcza butelkę do odpowiedniego kontenera
+    \item System inkrementuje licznik butelek w kontenerze
+    \item System sprawdza poziom napełnienia kontenera
+    \item Jeśli kontener >80\%: system wysyła powiadomienie
+    \item System potwierdza umieszczenie butelki
+\end{enumerate} \\
+\hline
+
+\textbf{Alternatywne scenariusze} & 
+\textbf{A1: Butelka szklana}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 3a. System wykrywa materiał: szkło
+    \item 3b. System pomija zgniatanie
+    \item 3c. System ostrożnie przemieszcza do kontenera szkła
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A2: Butelka aluminiowa}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 3a. System wykrywa materiał: aluminium
+    \item 3b. System pomija zgniatanie (lub lekko zgniata)
+    \item 3c. System przemieszcza do kontenera aluminium
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A3: Kontener prawie pełny}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 7a. System wykrywa napełnienie >80\%
+    \item 7b. System wysyła powiadomienie "CONTAINER\_ALMOST\_FULL"
+    \item 7c. System kontynuuje przyjmowanie do 95\%
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A4: Kontener pełny}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 7a. System wykrywa napełnienie >95\%
+    \item 7b. System wysyła powiadomienie "CONTAINER\_FULL"
+    \item 7c. System blokuje przyjmowanie kolejnych butelek tego typu
+    \item 7d. System wyświetla komunikat użytkownikowi
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A5: Błąd mechanizmu zgniatającego}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 4a. System wykrywa usterkę mechanizmu
+    \item 4b. System pomija zgniatanie
+    \item 4c. System umieszcza butelkę niezgniecioną
+    \item 4d. System wysyła powiadomienie o usterce
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{A6: Zablokowanie toru}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 5a. System wykrywa blokadę na torze transportowym
+    \item 5b. System próbuje usunąć blokadę (odwrócenie silnika)
+    \item 5c. Jeśli niepowodzenie: system przechodzi w tryb awaryjny
+    \item 5d. System wysyła powiadomienie "TRANSPORT\_BLOCKED"
+\end{itemize} \\
+\hline
+
+\textbf{Warunki końcowe} & 
+\begin{itemize}[leftmargin=*, nosep]
+    \item Butelka została umieszczona w odpowiednim kontenerze
+    \item Liczniki kontenerów zostały zaktualizowane
+    \item System monitoruje poziom napełnienia
+    \item Powiadomienia zostały wysłane (jeśli potrzeba)
+\end{itemize} \\
+\hline
+
+\end{longtable}
+
+\end{document}

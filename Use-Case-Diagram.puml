@@ -1,0 +1,104 @@
+@startuml
+left to right direction
+actor "Użytkownik" as User
+actor "Serwisant" as Tech
+actor "System sklepu\n/Aplikacja" as System
+
+rectangle "Automat do butelek" {
+  usecase "Wprowadzenie butelki" as UC1
+  usecase "Zczytanie kodu kreskowego" as UC2
+  usecase "Określenie materiału" as UC3
+  usecase "Określenie pojemności" as UC4
+  usecase "Określenie poziomu zgniecenia" as UC5
+  usecase "Wypłata środków" as UC6
+  usecase "Darmowa utylizacja" as UC7
+  usecase "Odrzucenie butelki" as UC8
+  
+  usecase "Przechowywanie butelek" as UC9
+  usecase "Sortowanie po materiale" as UC9a
+  usecase "Zgniatanie plastikowych butelek" as UC9b
+  usecase "Przemieszczenie do kontenera" as UC9c
+  
+  usecase "Obsługa rodzaju wypłaty" as UC6a
+  usecase "Wypłata na kartę sklepu" as UC6a1
+  usecase "Wypłata w monetach" as UC6a2
+  usecase "Wypłata przez aplikację" as UC6a3
+  usecase "Wypłata bonem ze zniżką" as UC6a4
+  usecase "Wypłata na kartę" as UC6a5
+  
+  usecase "Maintenance automatu" as UC10
+  usecase "Opróżnienie automatu" as UC10a
+  usecase "Wymiana rolki papieru" as UC10b
+  usecase "Uzupełnienie pieniędzy" as UC10c
+  usecase "Out of commission" as UC10d
+  
+  usecase "Wysyłanie powiadomień" as UC11
+  usecase "Powiadomienie o stanie technicznym" as UC11a
+  usecase "Powiadomienie o transakcji" as UC11b
+  
+  usecase "Wyświetlacz / interfejs" as UC12
+  usecase "Wybór języka" as UC12a
+  usecase "Wybór rodzaju wypłaty" as UC12b
+  usecase "Zakończenie transakcji" as UC12c
+  usecase "Wyświetlanie wysokości uznania" as UC12d
+  usecase "Wyświetlanie ilości butelek" as UC12e
+  usecase "Timer przed ponownym wrzuceniem" as UC12f
+}
+
+' Relacje użytkownika
+User --> UC1
+User --> UC12
+
+' Relacje serwisanta
+Tech --> UC10
+
+' Relacje z systemem
+System <-- UC11
+
+' Hierarchia wprowadzenia butelki
+UC1 .> UC2 : <<include>>
+UC2 .> UC3 : <<include>>
+UC2 .> UC4 : <<include>>
+UC1 .> UC5 : <<include>>
+
+' Rozszerzenia po określeniu zgniecenia
+UC6 ..> UC5 : <<extend>>
+UC7 ..> UC5 : <<extend>>
+UC8 ..> UC5 : <<extend>>
+
+' Hierarchia przechowywania
+UC9 .> UC9a : <<include>>
+UC9 .> UC9b : <<include>>
+UC9 .> UC9c : <<include>>
+UC1 --> UC9
+
+' Hierarchia wypłaty
+UC6 .> UC6a : <<include>>
+UC6a <|-- UC6a1
+UC6a <|-- UC6a2
+UC6a <|-- UC6a3
+UC6a <|-- UC6a4
+UC6a <|-- UC6a5
+
+' Hierarchia maintenance
+UC10 .> UC10a : <<include>>
+UC10 .> UC10b : <<include>>
+UC10 .> UC10c : <<include>>
+UC10d ..> UC10 : <<extend>>
+
+' Hierarchia powiadomień
+UC11 <|-- UC11a
+UC11 <|-- UC11b
+UC10 --> UC11
+UC9 --> UC11
+
+' Hierarchia wyświetlacza
+UC12 <|-- UC12a
+UC12 <|-- UC12b
+UC12 <|-- UC12c
+UC12 <|-- UC12d
+UC12 <|-- UC12e
+UC12 <|-- UC12f
+UC6 --> UC12
+UC12b --> UC6a
+@enduml
